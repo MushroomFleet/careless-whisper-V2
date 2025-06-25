@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <StartupObject>CarelessWhisperV2.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- System Tray Integration -->
+    <PackageReference Include="H.NotifyIcon.Wpf" Version="2.3.0" />
+    
+    <!-- Global Hotkeys -->
+    <PackageReference Include="SharpHook" Version="5.3.8" />
+    
+    <!-- Audio Recording -->
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    
+    <!-- Speech Recognition -->
+    <PackageReference Include="Whisper.net" Version="1.8.1" />
+    <PackageReference Include="Whisper.net.Runtime" Version="1.8.1" />
+    
+    <!-- Dependency Injection and Configuration -->
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Assets\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
