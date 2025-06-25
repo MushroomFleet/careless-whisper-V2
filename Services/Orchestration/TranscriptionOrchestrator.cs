@@ -154,10 +154,22 @@ public class TranscriptionOrchestrator : IDisposable
             if (!string.IsNullOrWhiteSpace(result.FullText))
             {
                 // Copy to clipboard on UI thread (required for STA thread)
-                await Application.Current.Dispatcher.InvokeAsync(async () =>
+                _logger.LogInformation("Attempting to copy text to clipboard: {Text}", result.FullText.Substring(0, Math.Min(50, result.FullText.Length)));
+                
+                try
                 {
-                    await _clipboardService.SetTextAsync(result.FullText);
-                });
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        // Use direct WPF clipboard - safe and synchronous
+                        System.Windows.Clipboard.SetText(result.FullText);
+                        _logger.LogInformation("Successfully copied text to clipboard");
+                    });
+                }
+                catch (Exception clipboardEx)
+                {
+                    _logger.LogError(clipboardEx, "Failed to copy text to clipboard: {Error}", clipboardEx.Message);
+                    // Don't throw - continue with logging and event notification
+                }
                 
                 // Log to file if enabled
                 if (_settings.Logging.EnableTranscriptionLogging)
